@@ -22,7 +22,7 @@ hccap_ext = '.hccap'
 #
 def wpaclean(infile):
 	''' run wpaclean command '''
-	command = 'wpaclean {0} {1}'.format(outfile, tmpfile)
+	command = 'wpaclean {0} {1}'.format(tmpfile, tmpfile)
 	subprocess.call(command, shell=True)
 
 
