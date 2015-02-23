@@ -1,0 +1,59 @@
+#!/usr/bin/env python
+#
+#	Author: historypeats <iam.historypeats@gmail.com>
+#	Description: Convert aircrack-ng .cap files to Hashcat .hccap format
+#
+from os.path import basename
+from os.path import splitext
+import argparse
+import subprocess
+
+
+#
+# globals
+#
+outcap = 'out.cap'
+tmpfile = 'wpa2clean.cap'
+hccap_ext = '.hccap'
+
+
+#
+# functions
+#
+def wpaclean(infile):
+	''' run wpaclean command '''
+	command = 'wpaclean {0} {1}'.format(outfile, tmpfile)
+	subprocess.call(command, shell=True)
+
+
+def aircrack(outfile):
+	''' run aircrack command '''
+	command = 'aircrack-ng {0} -J {1}'.format(tmpfile, outfile)
+	subprocess.call(command, shell=True)
+
+
+def init():
+	''' initialize argparse '''
+	parser = argparse.ArgumentParser(description='Convert aircrack-ng .cap files to Hashcat .hccap format.')
+	parser.add_argument('infile', help='the input .cap file', type=str)
+
+	return parser.parse_args()
+
+
+#
+# main
+#
+def main():
+	''' main '''
+	args = init()
+	infile = args.infile
+	outfile = splitext(basename(infile))[0] + hccap_ext
+
+	wpaclean(infile)
+	aircrack(outfile)
+
+	print 'Converted file {0} to {1}'.format(infile, outfile)
+
+
+if __name__ == '__main__':
+	main()
