@@ -36,6 +36,7 @@ def aircrack(outfile):
 
 	if 'No networks found' in out:
 		print 'No networks found. Exiting.'
+		cleanup()
 		sys.exit(-1)
 
 def cleanup():
