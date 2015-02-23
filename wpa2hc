@@ -25,13 +25,14 @@ hccap_ext = '.hccap'
 def wpaclean(infile):
 	''' run wpaclean command '''
 	command = 'wpaclean {0} {1}'.format(tmpfile, tmpfile)
-	out, err = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-
+	p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+	out, err = p.communicate()
 
 def aircrack(outfile):
 	''' run aircrack command '''
 	command = 'aircrack-ng {0} -J {1}'.format(tmpfile, outfile)
-	out, err = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+	p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+	out, err = p.communicate()
 
 	if 'No networks found' in out:
 		print 'No networks found. Exiting.'
