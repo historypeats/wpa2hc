@@ -16,7 +16,6 @@ from os.path import splitext
 #
 outcap = 'out.cap'
 tmpfile = 'wpa2clean.cap'
-hccap_ext = '.hccap'
 
 
 #
@@ -24,7 +23,7 @@ hccap_ext = '.hccap'
 #
 def wpaclean(infile):
 	''' run wpaclean command '''
-	command = 'wpaclean {0} {1}'.format(tmpfile, tmpfile)
+	command = 'wpaclean {0} {1}'.format(tmpfile, infile)
 	p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	out, err = p.communicate()
 
@@ -43,7 +42,6 @@ def cleanup():
 	''' delete tmp files '''
 	os.remove(tmpfile)
 
-
 def init():
 	''' initialize argparse '''
 	parser = argparse.ArgumentParser(description='Convert aircrack-ng .cap files to Hashcat .hccap format.')
@@ -59,7 +57,7 @@ def main():
 	''' main '''
 	args = init()
 	infile = args.infile
-	outfile = splitext(basename(infile))[0] + hccap_ext
+	outfile = splitext(basename(infile))[0]
 
 	wpaclean(infile)
 	aircrack(outfile)
